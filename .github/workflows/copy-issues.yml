@@ -2,6 +2,9 @@ name: "Copy issues"
 on:
   workflow_dispatch:
 
+env:
+  SRC_REPO: 'yumemi-inc/android-engineer-codecheck'
+
 jobs:
   get-issue-labels:
     if: github.repository != 'yumemi-inc/android-engineer-codecheck'
@@ -13,7 +16,7 @@ jobs:
       id: get_label_data
       uses: octokit/request-action@v2.1.0
       with:
-        route: GET /repos/yumemi-inc/android-engineer-codecheck/labels
+        route: GET /repos/${{ env.SRC_REPO }}/labels
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - id: output_label_data
@@ -48,7 +51,7 @@ jobs:
       id: get_milestones_data
       uses: octokit/request-action@v2.1.0
       with:
-        route: GET /repos/yumemi-inc/android-engineer-codecheck/milestones
+        route: GET /repos/${{ env.SRC_REPO }}/milestones
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - id: output_milestones_data
@@ -100,7 +103,7 @@ jobs:
       id: get_issues_data
       uses: octokit/request-action@v2.1.0
       with:
-        route: GET /repos/yumemi-inc/android-engineer-codecheck/issues
+        route: GET /repos/${{ env.SRC_REPO }}/issues
         sort: created
         direction: asc
       env:
